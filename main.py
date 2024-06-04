@@ -67,45 +67,17 @@ def detalle_prod(id_producto):
         print(e)
     finally:
         cursor.close() 
-        conn.close() 
-
-        
-"""@app.route('/update', methods=['PUT'])
-def actualizar_prod():
-    try:
-        _json = request.json
-        _id_producto = _json['id_producto']
-        _nombre_producto = _json['nombre_producto']
-        _valor_producto = _json['valor_producto']
-        if _id_producto and _nombre_producto and _valor_producto and request.method == 'PUT':			
-            sqlQuery = "UPDATE producto SET nombre_producto=%s, valor_producto=%s WHERE id_producto=%s"
-            bindData = (_nombre_producto, _valor_producto, _id_producto,)
-            conn = mysql.connect()
-            cursor = conn.cursor()
-            cursor.execute(sqlQuery, bindData)
-            conn.commit()
-            response = jsonify('producto updated successfully!')
-            response.status_code = 200
-            return response
-        else:
-            return showMessage()
-    except Exception as e:
-        print(e)
-    finally:
-        cursor.close() 
-        conn.close()  """
-        
+        conn.close()
 
 
-
-@app.route('/update/<int:id_producto>/<valor_producto>', methods=['PUT','PATCH'])
-def actualizar_producto(id_producto,valor_producto):
+@app.route('/update/<int:id_producto>/<valor_producto>', methods=['PUT', 'PATCH'])
+def actualizar_producto(id_producto, valor_producto):
     try:
         conn = mysql.connect()
         cursor = conn.cursor(pymysql.cursors.DictCursor)
-        sqlQuery = ("UPDATE producto SET valor_producto=%s WHERE id_producto=%s", id_producto)
-        bindData = (id_producto,valor_producto)
-        cursor.execute(sqlQuery,bindData)
+        sqlQuery = "UPDATE producto SET valor_producto=%s WHERE id_producto=%s"
+        bindData = (valor_producto, id_producto)
+        cursor.execute(sqlQuery, bindData)
         conn.commit()
         response = jsonify("Producto actualizado correctamente")
         response.status_code = 200
