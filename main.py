@@ -1,14 +1,14 @@
 import pymysql
 from app import app
 from config import mysql
-from flask import jsonify, request, redirect, send_from_directory
+from flask import jsonify, request, redirect, render_template, url_for
 from transbank.webpay.webpay_plus.transaction import Transaction, WebpayOptions
 from transbank.common.integration_type import IntegrationType
 
 
 @app.route('/')
 def index():
-    return send_from_directory('.', 'index.html')
+    return render_template('index.html')
 
 
 @app.route('/create/<id_producto2>/<nombre_producto2>/<valor_producto2>/<tipo_producto2>', methods=['POST'])
@@ -31,9 +31,6 @@ def create_producto(id_producto2, nombre_producto2, valor_producto2, tipo_produc
     finally:
         cursor.close() 
         conn.close() 
-
-
-
 @app.route('/producto', methods=['GET'])
 def info_prod():
         try:
@@ -50,9 +47,6 @@ def info_prod():
         finally:
             cursor.close() 
             conn.close()  
-
-
-
 @app.route('/producto/<int:id_producto>')
 def detalle_prod(id_producto):
     try:
@@ -68,8 +62,6 @@ def detalle_prod(id_producto):
     finally:
         cursor.close() 
         conn.close()
-
-
 @app.route('/update/<int:id_producto>/<valor_producto>', methods=['PUT', 'PATCH'])
 def actualizar_producto(id_producto, valor_producto):
     try:
@@ -89,9 +81,7 @@ def actualizar_producto(id_producto, valor_producto):
         return response
     finally:
         cursor.close()
-        conn.close()
-
-        
+        conn.close()       
 @app.route('/delete/<int:id_producto>', methods=['DELETE'])
 def eliminar_prod(id_producto):
     try:
