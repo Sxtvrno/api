@@ -1,6 +1,9 @@
 body {
     font-family: Arial, sans-serif;
     margin: 20px;
+    background-image: url(https://img.freepik.com/fotos-premium/desenfoque-pasillo-supermercado-fondo-desenfocado-clientes_293060-17204.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 #product-list {
@@ -9,12 +12,13 @@ body {
 }
 
 .product {
-    border: 1px solid #ccc;
+    border: 1px solid black;
     border-radius: 5px;
     margin: 10px;
     padding: 10px;
     width: 200px;
     text-align: center;
+    background-color: blanchedalmond;
 }
 
 .product img {
@@ -23,11 +27,12 @@ body {
 }
 
 .cart-item {
-    border: 1px solid #ccc;
+    border: 1px solid black;
     border-radius: 5px;
     margin: 10px;
     padding: 10px;
     width: 300px;
+    background-color: blanchedalmond;
 }
 
 .cart-item h3 {
@@ -41,7 +46,7 @@ body {
 button {
     background-color: #4CAF50; /* Green */
     border: none;
-    color: white;
+    color: blanchedalmond;
     padding: 15px 32px;
     text-align: center;
     text-decoration: none;
@@ -51,6 +56,72 @@ button {
     cursor: pointer;
 }
 
+button:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+}
+
+button:hover:enabled {
+    background-color: #45a049;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+}
+
+h1, h2 {
+    color: #333;
+}
+
+form {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-top: 10px;
+}
+
+input[type="text"], input[type="number"] {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    box-sizing: border-box;
+}
+
+button {
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 10px 2px;
+    cursor: pointer;
+}
+
 button:hover {
     background-color: #45a049;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+table, th, td {
+    border: 1px solid #ddd;
+}
+
+th, td {
+    padding: 10px;
+    text-align: left;
+}
+
+th {
+    background-color: blanchedalmond;
 }

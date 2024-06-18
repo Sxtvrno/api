@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const apiURL = '/producto';
 
     checkoutButton.textContent = 'Pagar';
+    checkoutButton.disabled = true;  // Inicialmente deshabilitado
     checkoutButton.onclick = () => {
         const totalAmount = cart.reduce((sum, item) => sum + item.valor_producto * item.quantity, 0);
         window.location.href = `/create_transaction?amount=${totalAmount}`;
@@ -35,7 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const productElement = document.createElement('div');
             productElement.classList.add('product');
             productElement.innerHTML = `
-                <img src="${product.image}" alt="${product.nombre_producto}">
+                <img src="https://media.istockphoto.com/id/1351998505/es/foto/herramientas-puestas-a-la-venta-en-una-ferreter%C3%ADa.jpg?s=612x612&w=0&k=20&c=WwqYmIhbr18RnWAqWKnEm_CV_9NBCmEZcqqHTrXsZiA=" alt="${product.nombre_producto}">
                 <h2>${product.nombre_producto}</h2>
                 <p>Tipo: ${product.tipo_producto}</p>
                 <p>Precio: $${product.valor_producto}</p>
@@ -84,6 +85,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const total = cart.reduce((sum, item) => sum + item.valor_producto * item.quantity, 0);
         cartTotalElement.innerHTML = `<h2>Total: $${total.toFixed(2)}</h2>`;
+
+        // Habilitar o deshabilitar el botón de pago
+        checkoutButton.disabled = cart.length === 0;
     };
 
     fetchProducts();

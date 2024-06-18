@@ -11,6 +11,11 @@ def index():
     return render_template('index.html')
 
 
+
+@app.route('/admin')
+def admin():
+    return render_template('admin.html')
+
 @app.route('/create/<id_producto2>/<nombre_producto2>/<valor_producto2>/<tipo_producto2>', methods=['POST'])
 def create_producto(id_producto2, nombre_producto2, valor_producto2, tipo_producto2):
     try:
@@ -30,23 +35,24 @@ def create_producto(id_producto2, nombre_producto2, valor_producto2, tipo_produc
         return response
     finally:
         cursor.close() 
-        conn.close() 
+        conn.close()
+
 @app.route('/producto', methods=['GET'])
 def info_prod():
-        try:
-              
-            conn = mysql.connect()
-            cursor = conn.cursor(pymysql.cursors.DictCursor)
-            cursor.execute("SELECT id_producto, tipo_producto, nombre_producto, valor_producto  FROM producto")
-            empRows = cursor.fetchall()
-            response = jsonify(empRows)
-            response.status_code = 200
-            return response
-        except Exception as e:
-            print(e)
-        finally:
-            cursor.close() 
-            conn.close()  
+    try:
+        conn = mysql.connect()
+        cursor = conn.cursor(pymysql.cursors.DictCursor)
+        cursor.execute("SELECT id_producto, tipo_producto, nombre_producto, valor_producto FROM producto")
+        empRows = cursor.fetchall()
+        response = jsonify(empRows)
+        response.status_code = 200
+        return response
+    except Exception as e:
+        print(e)
+    finally:
+        cursor.close() 
+        conn.close()
+
 @app.route('/producto/<int:id_producto>')
 def detalle_prod(id_producto):
     try:
@@ -62,6 +68,7 @@ def detalle_prod(id_producto):
     finally:
         cursor.close() 
         conn.close()
+
 @app.route('/update/<int:id_producto>/<valor_producto>', methods=['PUT', 'PATCH'])
 def actualizar_producto(id_producto, valor_producto):
     try:
@@ -81,9 +88,23 @@ def actualizar_producto(id_producto, valor_producto):
         return response
     finally:
         cursor.close()
-        conn.close()       
+        conn.close()
+
 @app.route('/delete/<int:id_producto>', methods=['DELETE'])
 def eliminar_prod(id_producto):
+    try:
+        conn = mysql.connect()
+        cursor = conn.cursor()
+        cursor.execute("DELETE FROM producto WHERE id_producto =%s", (id_producto,))
+        conn.commit()
+        response = jsonify("Producto de código %s borrado" % id_producto)
+        response.status_code = 200
+        return response
+    except Exception as e:
+        print(e)
+    finally:
+        cursor.close()
+        conn.close()
     try:
         conn = mysql.connect()
         cursor = conn.cursor()

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 14-05-2024 a las 19:17:20
+-- Tiempo de generación: 18-06-2024 a las 03:04:13
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -28,22 +28,11 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `producto` (
-  `id_producto` int(4) NOT NULL,
-  `nombre_producto` varchar(30) NOT NULL,
+  `id_producto` int(11) NOT NULL,
+  `nombre_producto` varchar(255) NOT NULL,
   `valor_producto` int(10) NOT NULL,
   `tipo_producto` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- Volcado de datos para la tabla `producto`
---
-
-INSERT INTO `producto` (`id_producto`, `nombre_producto`, `valor_producto`, `tipo_producto`) VALUES
-(1, 'Taladros', 29990, 'Herramientas-Manuales'),
-(2, 'Sierras', 30000, 'Herramientas-Manuales'),
-(4, 'Martillos', 15000, 'Herramientas-Manuales'),
-(10, 'Pinturas', 1500, 'Materiales-Basicos'),
-(15, 'Cemento', 10000, 'Materiales-Basicos');
 
 -- --------------------------------------------------------
 
@@ -104,7 +93,7 @@ ALTER TABLE `producto`
 -- AUTO_INCREMENT de la tabla `producto`
 --
 ALTER TABLE `producto`
-  MODIFY `id_producto` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id_producto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
