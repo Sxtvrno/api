@@ -38,13 +38,13 @@ def index():
 def admin():
     return render_template('admin.html')
 
-@app.route('/create/<id_producto2>/<nombre_producto2>/<valor_producto2>/<tipo_producto2>', methods=['POST'])
-def create_producto(id_producto2, nombre_producto2, valor_producto2, tipo_producto2):
+@app.route('/create/<nombre_producto2>/<valor_producto2>/<tipo_producto2>', methods=['POST'])
+def create_producto(nombre_producto2, valor_producto2, tipo_producto2):
     try:
         conn = mysql.connect()
         cursor = conn.cursor(pymysql.cursors.DictCursor)
-        sqlQuery = "INSERT INTO producto(id_producto, nombre_producto, valor_producto, tipo_producto) VALUES(%s, %s, %s,%s)"
-        bindData = (id_producto2, nombre_producto2, valor_producto2, tipo_producto2)
+        sqlQuery = "INSERT INTO producto(nombre_producto, valor_producto, tipo_producto) VALUES(%s, %s,%s)"
+        bindData = (nombre_producto2, valor_producto2, tipo_producto2)
         cursor.execute(sqlQuery, bindData)
         conn.commit()
         response = jsonify('Producto agregado exitosamente')

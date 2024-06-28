@@ -78,9 +78,8 @@
             const nombre = form.nombre_producto.value;
             const tipo = form.tipo_producto.value;
             const valor = form.valor_producto.value;
-            const id = productIdCounter++;
 
-            const response = await fetch(`/create/${id}/${nombre}/${valor}/${tipo}`, { method: 'POST' });
+            const response = await fetch(`/create/${nombre}/${valor}/${tipo}`, { method: 'POST' });
             if (response.ok) {
                 fetchProducts();
                 form.reset();
