@@ -38,13 +38,13 @@ def index():
 def admin():
     return render_template('admin.html')
 
-@app.route('/create/<nombre_producto2>/<valor_producto2>/<tipo_producto2>', methods=['POST'])
-def create_producto(nombre_producto2, valor_producto2, tipo_producto2):
+@app.route('/create/<nombre_producto2>/<valor_producto2>/<tipo_producto2>/<stock2>', methods=['POST'])
+def create_producto(nombre_producto2, valor_producto2, tipo_producto2, stock2):
     try:
         conn = mysql.connect()
         cursor = conn.cursor(pymysql.cursors.DictCursor)
-        sqlQuery = "INSERT INTO producto(nombre_producto, valor_producto, tipo_producto) VALUES(%s, %s,%s)"
-        bindData = (nombre_producto2, valor_producto2, tipo_producto2)
+        sqlQuery = "INSERT INTO producto(nombre_producto, valor_producto, tipo_producto, stock) VALUES(%s, %s,%s,%s)"
+        bindData = (nombre_producto2, valor_producto2, tipo_producto2, stock2)
         cursor.execute(sqlQuery, bindData)
         conn.commit()
         response = jsonify('Producto agregado exitosamente')
@@ -64,7 +64,7 @@ def info_prod():
     try:
         conn = mysql.connect()
         cursor = conn.cursor(pymysql.cursors.DictCursor)
-        cursor.execute("SELECT id_producto, tipo_producto, nombre_producto, valor_producto FROM producto")
+        cursor.execute("SELECT id_producto, tipo_producto, nombre_producto, valor_producto, stock FROM producto")
         empRows = cursor.fetchall()
         
         # Obtener la tasa de cambio
@@ -95,7 +95,7 @@ def detalle_prod(id_producto):
     try:
         conn = mysql.connect()
         cursor = conn.cursor(pymysql.cursors.DictCursor)
-        cursor.execute("SELECT id_producto, nombre_producto, valor_producto FROM producto WHERE id_producto =%s", id_producto)
+        cursor.execute("SELECT id_producto, nombre_producto, valor_producto, stock FROM producto WHERE id_producto =%s", id_producto)
         empRow = cursor.fetchone()
         
         # Obtener la tasa de cambio
@@ -121,13 +121,13 @@ def detalle_prod(id_producto):
         cursor.close() 
         conn.close()
 
-@app.route('/update/<int:id_producto>/<valor_producto>', methods=['PUT', 'PATCH'])
-def actualizar_producto(id_producto, valor_producto):
+@app.route('/update/<int:id_producto>/<valor_producto>/<stock>', methods=['PUT', 'PATCH'])
+def actualizar_producto(id_producto, valor_producto, stock):
     try:
         conn = mysql.connect()
         cursor = conn.cursor(pymysql.cursors.DictCursor)
-        sqlQuery = "UPDATE producto SET valor_producto=%s WHERE id_producto=%s"
-        bindData = (valor_producto, id_producto)
+        sqlQuery = "UPDATE producto SET valor_producto=%s , stock =%s WHERE id_producto=%s"
+        bindData = (valor_producto, stock, id_producto)
         cursor.execute(sqlQuery, bindData)
         conn.commit()
         response = jsonify("Producto actualizado correctamente")
@@ -188,7 +188,11 @@ def commit_transaction():
     token = request.args.get('token_ws') if request.method == 'GET' else request.form.get('token_ws')
     try:
         response = transaction.commit(token)
-        return f"Estado de la transacción: {response['status']}, Monto: {response['amount']}, Orden de compra: {response['buy_order']}, Codigo de autorización: {response['authorization_code']}"
+        return render_template('commit.html',
+                               status=response['status'],
+                               amount=response['amount'],
+                               buy_order=response['buy_order'],
+                               authorization_code=response['authorization_code'])
     except Exception as e:
         return f"Error al confirmar la transacción: {e}"
     

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resultado de Transacción</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Resultado de Transacción</h1>
+        <div class="transaction-details">
+            <p><strong>Estado:</strong> {{ status }}</p>
+            <p><strong>Monto:</strong> {{ amount }}</p>
+            <p><strong>Orden de Compra:</strong> {{ buy_order }}</p>
+            <p><strong>Código de Autorización:</strong> {{ authorization_code }}</p>
+        </div>
+        <a href="/" class="btn">Volver al inicio</a>
+    </div>
+</body>
+</html>
+

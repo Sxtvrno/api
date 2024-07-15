@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 18-06-2024 a las 03:04:13
+-- Tiempo de generación: 15-07-2024 a las 02:41:18
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -31,49 +31,18 @@ CREATE TABLE `producto` (
   `id_producto` int(11) NOT NULL,
   `nombre_producto` varchar(255) NOT NULL,
   `valor_producto` int(10) NOT NULL,
-  `tipo_producto` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `stock`
---
-
-CREATE TABLE `stock` (
-  `cantidad_stock` int(4) NOT NULL
+  `tipo_producto` varchar(50) NOT NULL,
+  `Stock` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Volcado de datos para la tabla `stock`
+-- Volcado de datos para la tabla `producto`
 --
 
-INSERT INTO `stock` (`cantidad_stock`) VALUES
-(0),
-(1),
-(0),
-(1),
-(0),
-(1);
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `tipo`
---
-
-CREATE TABLE `tipo` (
-  `tipo_producto` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- Volcado de datos para la tabla `tipo`
---
-
-INSERT INTO `tipo` (`tipo_producto`) VALUES
-('Herramientas Manuales'),
-('Materiales Basicos'),
-('Equipos Seguridad');
+INSERT INTO `producto` (`id_producto`, `nombre_producto`, `valor_producto`, `tipo_producto`, `Stock`) VALUES
+(4, 'Casco', 3000, 'Equipos-Seguridad', 10),
+(5, 'Clavos', 1500, 'Materiales-Basicos', 1000),
+(6, 'Taladro', 20000, 'Herramientas-Manuales', 25);
 
 --
 -- Índices para tablas volcadas
@@ -93,7 +62,7 @@ ALTER TABLE `producto`
 -- AUTO_INCREMENT de la tabla `producto`
 --
 ALTER TABLE `producto`
-  MODIFY `id_producto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_producto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

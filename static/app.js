@@ -42,7 +42,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 <p>Tipo: ${product.tipo_producto}</p>
                 <p>Precio CLP: $${product.valor_producto}</p>
                 <p>Precio USD: $${product.valor_producto_usd}</p>
-                <button onclick="addToCart(${product.id_producto})">Añadir al Carrito</button>
+                <p>Stock: ${product.stock}</p>
+                <button onclick="addToCart(${product.id_producto})" ${product.stock === 0 ? 'disabled title="No hay stock"' : ''}>Añadir al Carrito</button>
             `;
             productList.appendChild(productElement);
         });
@@ -51,15 +52,29 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addToCart = (id_producto) => {
         const product = products.find(p => p.id_producto === id_producto);
         const existingItem = cart.find(item => item.id_producto === id_producto);
-
+    
         if (existingItem) {
-            existingItem.quantity += 1;
+            // Si ya existe el producto en el carrito, verificar si se puede incrementar la cantidad
+            if (existingItem.quantity < product.stock) {
+                existingItem.quantity += 1;
+            } else {
+                // Si no se puede incrementar más, mostrar un mensaje o manejar la situación de otra manera
+                console.log('No hay suficiente stock disponible');
+                // Puedes mostrar una alerta o deshabilitar el botón de "Añadir al Carrito"
+            }
         } else {
-            cart.push({ ...product, quantity: 1 });
+            // Si es la primera vez que se agrega este producto al carrito
+            if (product.stock > 0) {
+                cart.push({ ...product, quantity: 1 });
+            } else {
+                console.log('No hay stock disponible');
+                // Puedes mostrar una alerta o deshabilitar el botón de "Añadir al Carrito"
+            }
         }
-
+    
         displayCart();
     };
+    
 
     window.updateQuantity = (id_producto, quantity) => {
         const item = cart.find(item => item.id_producto === id_producto);
@@ -82,17 +97,24 @@ document.addEventListener('DOMContentLoaded', () => {
                 <p>Precio CLP: $${item.valor_producto}</p>
                 <p>Precio USD: $${item.valor_producto_usd}</p>
                 <p>Cantidad: <input type="number" value="${item.quantity}" min="1" onchange="updateQuantity(${item.id_producto}, this.value)"></p>
+                <button onclick="removeFromCart(${item.id_producto})">Eliminar</button>
             `;
             cartElement.appendChild(cartItemElement);
         });
-
+    
         const totalCLP = cart.reduce((sum, item) => sum + item.valor_producto * item.quantity, 0);
         const totalUSD = cart.reduce((sum, item) => sum + item.valor_producto_usd * item.quantity, 0);
         cartTotalElement.innerHTML = `<h2>Total: $${totalCLP.toFixed(2)} CLP / $${totalUSD.toFixed(2)} USD</h2>`;
-
+    
         // Habilitar o deshabilitar el botón de pago
         checkoutButton.disabled = cart.length === 0;
     };
+    
+    window.removeFromCart = (id_producto) => {
+        cart = cart.filter(item => item.id_producto !== id_producto);
+        displayCart();
+    };
+    
 
     fetchProducts();
 });
