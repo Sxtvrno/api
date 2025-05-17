@@ -33,7 +33,7 @@ Ferremas es una API REST que permite:
 1. Clona el repositorio:
 
 ```bash
-git clone https://github.com/tuusuario/ferremas.git
+git clone https://github.com/Sxtvrno/api
 
 cd ferremas
 ```
